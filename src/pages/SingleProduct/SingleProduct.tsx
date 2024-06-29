@@ -64,7 +64,7 @@ const SingleProduct = () => {
                     Price:
                   </span>
                   <span className="text-gray-600 dark:text-gray-300">
-                    ${singleProduct?.productPrice}
+                    Rs.{singleProduct?.productPrice}
                   </span>
                 </div>
                 <div>
