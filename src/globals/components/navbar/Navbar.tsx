@@ -66,6 +66,12 @@ const Navbar = () => {
             ) : (
               <>
                 <Link
+                  to="/cart"
+                  className="text-sm font-semibold text-gray-900 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400"
+                >
+                  <span>Cart</span>
+                </Link>
+                <Link
                   to="/login"
                   onClick={handleLogout}
                   className="text-sm font-semibold text-gray-900 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400"

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import axios from "axios";
-import API from "../http";
+import { API } from "../http";
 import { Status } from "../globals/types/types";
 interface User {
   username: string;
