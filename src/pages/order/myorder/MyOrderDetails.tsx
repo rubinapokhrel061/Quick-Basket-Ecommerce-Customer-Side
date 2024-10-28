@@ -5,14 +5,13 @@ import {
   cancelMyOrder,
   fetchMyOrderDetails,
 } from "../../../store/checkoutSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { OrderStatus } from "../../../globals/types/CheckoutTypes";
 
 const MyOrderDetails = () => {
   const { id } = useParams();
-  const { orderDetails, status } = useAppSelector((state) => state.orders);
-  console.log(orderDetails);
-  const navigate = useNavigate();
+  const { orderDetails } = useAppSelector((state) => state.orders);
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (id) {

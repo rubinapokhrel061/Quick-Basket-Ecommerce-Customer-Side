@@ -28,6 +28,9 @@ const orderSlice = createSlice({
     ) {
       state.items.push(action.payload);
     },
+    resetStatus(state: OrderResponseData) {
+      state.status = Status.LOADING;
+    },
     setMyOrders(
       state: OrderResponseData,
       action: PayloadAction<MyOrdersData[]>
@@ -55,6 +58,7 @@ const orderSlice = createSlice({
 export const {
   setItems,
   setStatus,
+  resetStatus,
   setKhaltiUrl,
   setMyOrders,
   setMyOrderDetails,

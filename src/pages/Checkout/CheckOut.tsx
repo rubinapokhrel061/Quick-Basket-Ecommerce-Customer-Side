@@ -6,7 +6,7 @@ import {
   OrderData,
   PaymentMethod,
 } from "../../globals/types/CheckoutTypes";
-import { orderItem } from "../../store/checkoutSlice";
+import { orderItem, resetStatus } from "../../store/checkoutSlice";
 import { Status } from "../../globals/types/types";
 import { useNavigate } from "react-router-dom";
 
@@ -47,6 +47,7 @@ const Checkout = () => {
     (total, item) => item.Product.productPrice * item.quantity + total,
     0
   );
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const itemDetails: ItemDetails[] = items.map((item) => {
@@ -67,12 +68,18 @@ const Checkout = () => {
     // }
   };
   useEffect(() => {
-    if (khaltiUrl) {
-      window.location.href = khaltiUrl;
-      return;
+    if (subtotal < 1000) {
+      if (khaltiUrl) {
+        window.location.href = khaltiUrl;
+        return;
+      }
+    } else {
+      alert("you can only 1000 pay using khalti");
     }
+
     if (status === Status.SUCCESS) {
       alert("Order Placed successfully");
+      dispatch(resetStatus());
       navigate("/");
     }
   }, [status, khaltiUrl]);
