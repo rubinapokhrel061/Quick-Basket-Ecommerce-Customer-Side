@@ -6,6 +6,7 @@ import {
   OrderDetails,
   OrderResponseData,
   OrderResponseItem,
+  OrderStatus,
 } from "../globals/types/CheckoutTypes";
 import { AppDispatch } from "./store";
 import { APIAuthenticated } from "../http";
@@ -52,6 +53,17 @@ const orderSlice = createSlice({
     ) {
       state.orderDetails = action.payload;
     },
+    updateOrderStatus(
+      state: OrderResponseData,
+      action: PayloadAction<{ status: OrderStatus; orderId: string }>
+    ) {
+      const status = action.payload.status;
+      const orderId = action.payload.orderId;
+      const updatedOrder = state.myOrders.map((order) =>
+        order.id == orderId ? { ...order, orderStatus: status } : order
+      );
+      state.myOrders = updatedOrder;
+    },
   },
 });
 
@@ -62,6 +74,7 @@ export const {
   setKhaltiUrl,
   setMyOrders,
   setMyOrderDetails,
+  updateOrderStatus,
 } = orderSlice.actions;
 export default orderSlice.reducer;
 
@@ -134,5 +147,10 @@ export function cancelMyOrder(id: string) {
     } catch (error) {
       dispatch(setStatus(Status.ERROR));
     }
+  };
+}
+export function updateOrderStatusInStore(data: any) {
+  return function updateOrderStatusInStoreThunk(dispatch: AppDispatch) {
+    dispatch(updateOrderStatus(data));
   };
 }

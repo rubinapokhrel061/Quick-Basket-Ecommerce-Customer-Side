@@ -11,6 +11,12 @@ import Checkout from "./pages/Checkout/CheckOut";
 import MyOrder from "./pages/order/myorder/MyOrder";
 import MyOrderDetails from "./pages/order/myorder/MyOrderDetails";
 
+import { io } from "socket.io-client";
+export const socket = io("http://localhost:8080", {
+  auth: {
+    token: localStorage.getItem("token"),
+  },
+});
 function App() {
   return (
     <Provider store={store}>
