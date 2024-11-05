@@ -7,6 +7,7 @@ import {
   OrderResponseData,
   OrderResponseItem,
   OrderStatus,
+  PaymentStatus,
 } from "../globals/types/CheckoutTypes";
 import { AppDispatch } from "./store";
 import { APIAuthenticated } from "../http";
@@ -64,6 +65,16 @@ const orderSlice = createSlice({
       );
       state.myOrders = updatedOrder;
     },
+    updatePaymentStatus(
+      state: OrderResponseData,
+      action: PayloadAction<{ orderId: string; paymentStatus: PaymentStatus }>
+    ) {
+      const { orderId, paymentStatus } = action.payload;
+      const order = state.myOrders.find((order) => order.id === orderId);
+      if (order) {
+        order.Payment.paymentStatus = paymentStatus;
+      }
+    },
   },
 });
 
@@ -75,6 +86,7 @@ export const {
   setMyOrders,
   setMyOrderDetails,
   updateOrderStatus,
+  updatePaymentStatus,
 } = orderSlice.actions;
 export default orderSlice.reducer;
 
@@ -152,5 +164,11 @@ export function cancelMyOrder(id: string) {
 export function updateOrderStatusInStore(data: any) {
   return function updateOrderStatusInStoreThunk(dispatch: AppDispatch) {
     dispatch(updateOrderStatus(data));
+  };
+}
+
+export function updatePaymentStatusInStore(data: any) {
+  return function updatePaymentStatusInStoreThunk(dispatch: AppDispatch) {
+    dispatch(updatePaymentStatus(data));
   };
 }

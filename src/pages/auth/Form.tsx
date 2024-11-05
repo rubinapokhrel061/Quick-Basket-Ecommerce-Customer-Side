@@ -59,6 +59,26 @@ const Form: React.FC<Props> = ({ type, onSubmit }) => {
               <div className="flex flex-col overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800 dark:text-gray-100">
                 <div className="grow p-5 md:px-16 md:py-12">
                   <form className="space-y-6" onSubmit={handleSubmit}>
+                    {type === "register" && (
+                      <>
+                        <div className="space-y-1">
+                          <label
+                            htmlFor="username"
+                            className="text-sm font-medium"
+                          >
+                            Username
+                          </label>
+                          <input
+                            type="username"
+                            id="username"
+                            onChange={handleChange}
+                            name="username"
+                            placeholder="Enter your username"
+                            className="block outline-none w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
+                          />
+                        </div>
+                      </>
+                    )}
                     <div className="space-y-1">
                       <label htmlFor="email" className="text-sm font-medium">
                         Email
@@ -69,29 +89,10 @@ const Form: React.FC<Props> = ({ type, onSubmit }) => {
                         onChange={handleChange}
                         name="email"
                         placeholder="Enter your email"
-                        className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
+                        className="block w-full outline-none rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
                       />
                     </div>
-                    {type === "register" && (
-                      <>
-                        <div className="space-y-1">
-                          <label
-                            htmlFor="username"
-                            className="text-sm font-medium"
-                          >
-                            username
-                          </label>
-                          <input
-                            type="username"
-                            id="username"
-                            onChange={handleChange}
-                            name="username"
-                            placeholder="Enter your username"
-                            className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
-                          />
-                        </div>
-                      </>
-                    )}
+
                     <div className="space-y-1">
                       <label htmlFor="password" className="text-sm font-medium">
                         Password
@@ -102,7 +103,7 @@ const Form: React.FC<Props> = ({ type, onSubmit }) => {
                         onChange={handleChange}
                         name="password"
                         placeholder="Enter your password"
-                        className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
+                        className="block w-full outline-none rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
                       />
                     </div>
                     <div>
@@ -141,7 +142,6 @@ const Form: React.FC<Props> = ({ type, onSubmit }) => {
                           />
                         </svg>
                         <span>
-                          {" "}
                           {type === "register" ? "Sign  Up" : "Sign In"}
                         </span>
                       </button>

@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   fetchMyOrders,
   updateOrderStatusInStore,
+  updatePaymentStatusInStore,
 } from "../../../store/checkoutSlice";
 import { Link } from "react-router-dom";
 import { OrderStatus } from "../../../globals/types/CheckoutTypes";
@@ -37,11 +38,32 @@ const MyOrder = () => {
         new Date(order.createdAt).toLocaleDateString() ===
           new Date(date).toLocaleDateString()
     );
+
   useEffect(() => {
-    socket.on("statusUpdated", (data: any) => {
-      dispatch(updateOrderStatusInStore(data));
-    });
-  }, [socket]);
+    // Define socket event listeners with cleanup
+    const handleStatusUpdated = (data: any) => {
+      dispatch(updateOrderStatusInStore(data)); // Correct dispatch for order status
+    };
+
+    const handlePaymentStatusUpdated = (data: any) => {
+      // Ensure data contains the expected structure
+      if (data?.orderId && data?.paymentStatus) {
+        dispatch(updatePaymentStatusInStore(data)); // Dispatch with correct payload
+      } else {
+        console.error("Invalid data received for payment status update:", data);
+      }
+    };
+
+    // Setup socket event listeners
+    socket.on("statusUpdated", handleStatusUpdated);
+    socket.on("paymentStatusUpdated", handlePaymentStatusUpdated);
+
+    // Cleanup on component unmount
+    return () => {
+      socket.off("statusUpdated", handleStatusUpdated);
+      socket.off("paymentStatusUpdated", handlePaymentStatusUpdated);
+    };
+  }, [dispatch, socket]);
 
   return (
     <>

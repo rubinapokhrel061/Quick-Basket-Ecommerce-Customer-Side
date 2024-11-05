@@ -24,10 +24,9 @@ export interface OrderResponseItem extends ItemDetails {
   orderId: string;
 }
 
-enum PaymentStatus {
+export enum PaymentStatus {
   Paid = "paid",
   Unpaid = "unpaid",
-  Pending = "pending",
 }
 
 interface Payment {
@@ -36,6 +35,7 @@ interface Payment {
 
 interface OrderPaymentData extends Payment {
   paymentStatus: PaymentStatus;
+  paymentId: string;
 }
 
 export interface OrderData {
@@ -43,6 +43,10 @@ export interface OrderData {
   shippingAddress: string;
   totalAmount: number;
   paymentDetails: Payment;
+  Payment: {
+    paymentMethod: PaymentMethod;
+    paymentStatus: PaymentStatus;
+  };
   items: ItemDetails[];
 }
 
