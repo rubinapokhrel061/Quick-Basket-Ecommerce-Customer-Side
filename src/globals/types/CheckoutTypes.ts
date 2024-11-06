@@ -43,7 +43,7 @@ export interface OrderData {
   shippingAddress: string;
   totalAmount: number;
   paymentDetails: Payment;
-  Payment: {
+  Payment?: {
     paymentMethod: PaymentMethod;
     paymentStatus: PaymentStatus;
   };

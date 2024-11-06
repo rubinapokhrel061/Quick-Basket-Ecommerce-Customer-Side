@@ -27,9 +27,9 @@ const Navbar = () => {
 
   return (
     <>
-      <header
+      <div
         id="page-header"
-        className="relative flex flex-none items-center py-7 text-white bg-[#333333]"
+        className="fixed w-full z-40 items-center py-7 text-white bg-[#333333]"
       >
         <div className="container mx-auto flex flex-col gap-4 px-5 text-center sm:flex-row sm:items-center sm:justify-between lg:px-8 xl:max-w-7xl">
           <div>
@@ -70,6 +70,13 @@ const Navbar = () => {
                   </span>
                 </Link>
                 <Link
+                  to="/myorder"
+                  className=" text-base font-semibold  hover:text-blue-600  md:text-lg "
+                >
+                  <span>MyOrders</span>
+                </Link>
+
+                <Link
                   to="/login"
                   onClick={handleLogout}
                   className=" text-base font-semibold  hover:text-blue-600  md:text-lg "
@@ -81,7 +88,7 @@ const Navbar = () => {
           </nav>
         </div>
         {/* END Main Header Content */}
-      </header>
+      </div>
     </>
   );
 };

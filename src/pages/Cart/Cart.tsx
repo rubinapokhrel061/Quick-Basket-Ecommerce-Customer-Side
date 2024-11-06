@@ -28,105 +28,110 @@ const Cart = () => {
   return (
     <div>
       <Navbar />
-      <div className="h-screen bg-gray-100 pt-20">
-        <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
-        <div className="mx-auto max-w-5xl flex justify-center px-6 md:flex md:space-x-6 xl:px-0">
-          <div className="rounded-lg md:w-2/3">
-            {items?.length > 0 &&
-              items?.map((item) => (
+      <div className="bg-gray-100 min-h-screen  py-8 md:pt-28">
+        <h1 className="text-center text-2xl font-bold text-gray-800 mb-8">
+          Cart Items
+        </h1>
+        {items?.length < 1 ? (
+          <div className="text-center text-lg text-red-800">
+            No products added to cart...
+          </div>
+        ) : (
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 px-4">
+            {/* Cart Items List */}
+            <div className="w-full md:w-2/3 bg-white shadow-lg rounded-lg p-6 ">
+              {items.map((item) => (
                 <div
                   key={item?.Product?.id}
-                  className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start"
+                  className="flex justify-between px-4 items-center bg-gray-50 rounded-md shadow-sm hover:shadow-lg transition-all "
                 >
-                  <img
-                    src={item?.Product?.productImageUrl}
-                    alt="product-image"
-                    className="w-full rounded-lg sm:w-40"
-                  />
-                  <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-                    <div className="mt-5 sm:mt-0">
-                      <h2 className="text-lg font-bold text-gray-900">
-                        {item?.Product?.productName}
-                      </h2>
-                      <p className="mt-1 text-xs text-gray-700">
-                        {item?.Product?.Category?.categoryName}
+                  <div className="flex justify-center items-center gap-3">
+                    <img
+                      src={item?.Product?.productImageUrl}
+                      alt="product-image"
+                      className="w-32 h-32 object-contain rounded-md"
+                    />
+                    <div>
+                      <p className="text-sm font-medium text-gray-800">
+                        Product Name : {item?.Product?.productName}
+                      </p>
+                      <p className="text-sm font-medium text-gray-800">
+                        Category : {item?.Product?.Category?.categoryName}
+                      </p>
+                      <p className="text-sm font-medium text-gray-800">
+                        Product Price : Rs. {item?.Product?.productPrice}
                       </p>
                     </div>
-                    <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-                      <div className="flex items-center border-gray-100">
-                        <span
-                          onClick={() =>
-                            handleUpdate(
-                              item?.Product?.id,
-                              Math.max(item?.quantity - 1, 1)
-                            )
-                          }
-                          className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"
-                        >
-                          -
-                        </span>
-                        <input
-                          className="h-8 w-8 border bg-white text-center text-xs outline-none"
-                          type="number"
-                          value={item?.quantity}
-                          min={1}
-                          readOnly
-                        />
-                        <span
-                          onClick={() =>
-                            handleUpdate(item?.Product?.id, item?.quantity + 1)
-                          }
-                          className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"
-                        >
-                          +
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-4">
-                        <p className="text-sm">
-                          Rs. {item?.Product?.productPrice}
-                        </p>
-                        <button
-                          onClick={() => handleDelete(item?.Product?.id)}
-                          className="px-2 py-1 rounded-lg border-2 border-gray-400"
-                        >
-                          Delete
-                        </button>
-                      </div>
+                  </div>
+                  <div className="flex items-center justify-between ml-4">
+                    <div className="flex items-center">
+                      <span
+                        onClick={() =>
+                          handleUpdate(
+                            item?.Product?.id,
+                            Math.max(item?.quantity - 1, 1)
+                          )
+                        }
+                        className="cursor-pointer rounded-l bg-gray-200 px-4 py-1 text-xl text-gray-600 hover:bg-blue-500 hover:text-white"
+                      >
+                        -
+                      </span>
+                      <input
+                        className="h-8 w-16 text-center text-sm border bg-white outline-none"
+                        type="number"
+                        value={item?.quantity}
+                        min={1}
+                        readOnly
+                      />
+                      <span
+                        onClick={() =>
+                          handleUpdate(item?.Product?.id, item?.quantity + 1)
+                        }
+                        className="cursor-pointer rounded-r bg-gray-200 px-4 py-1 text-xl text-gray-600 hover:bg-blue-500 hover:text-white"
+                      >
+                        +
+                      </span>
                     </div>
+
+                    <button
+                      onClick={() => handleDelete(item?.Product?.id)}
+                      className="ml-4  px-2 py-1 rounded-md text-slate-50 bg-red-500 hover:bg-red-700"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               ))}
-          </div>
-          <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
-            <div className="mb-2 flex justify-between">
-              <p className="text-gray-700">Total Items</p>
-              <p className="text-gray-700">{totalItemInCarts}</p>
             </div>
-            <div className="mb-2 flex justify-between">
-              <p className="text-gray-700">Total Price</p>
-              <p className="text-gray-700">Rs. {totalPriceInCarts}</p>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-gray-700">Shipping</p>
-              <p className="text-gray-700">Rs. 200</p>
-            </div>
-            <hr className="my-4" />
-            <div className="flex justify-between">
-              <p className="text-lg font-bold">Total</p>
-              <div>
-                <p className="mb-1 text-lg font-bold">
-                  Rs. {totalPriceInCarts + 200}
-                </p>
-                <p className="text-sm text-gray-700">including VAT</p>
+
+            {/* Cart Summary */}
+            <div className="w-full md:w-1/3 bg-white shadow-lg rounded-lg p-6 space-y-6">
+              <div className="text-lg font-semibold text-gray-800">
+                Cart Summary
+              </div>
+              <div className="flex justify-between text-sm text-gray-600">
+                <p>Total Items</p>
+                <p>{totalItemInCarts}</p>
+              </div>
+              <div className="flex justify-between text-sm text-gray-600">
+                <p>Total Price</p>
+                <p>Rs. {totalPriceInCarts}</p>
+              </div>
+              <hr className="my-4" />
+              <div className="flex justify-between text-lg font-bold text-gray-800">
+                <p>Total</p>
+                <p>Rs. {totalPriceInCarts}</p>
+              </div>
+              <div className="mt-4">
+                <Link to="/checkout">
+                  <button className="w-full py-2 bg-blue-500 text-white rounded-md text-lg hover:bg-blue-600 transition-all">
+                    Checkout
+                  </button>
+                </Link>
               </div>
             </div>
-            <Link to="/checkout">
-              <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
-                Check out
-              </button>
-            </Link>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

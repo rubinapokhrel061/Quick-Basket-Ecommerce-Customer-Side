@@ -15,6 +15,7 @@ const Checkout = () => {
   const { khaltiUrl, status } = useAppSelector((state) => state.orders);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(
     PaymentMethod.COD
   );
@@ -22,248 +23,241 @@ const Checkout = () => {
     phoneNumber: "",
     shippingAddress: "",
     totalAmount: 0,
-    paymentDetails: {
-      paymentMethod: PaymentMethod.COD,
-    },
+    paymentDetails: { paymentMethod: PaymentMethod.COD },
     items: [],
   });
+
   const handlePaymentMethod = (e: ChangeEvent<HTMLInputElement>) => {
     setPaymentMethod(e.target.value as PaymentMethod);
     setData({
       ...data,
-      paymentDetails: {
-        paymentMethod: e.target.value as PaymentMethod,
-      },
+      paymentDetails: { paymentMethod: e.target.value as PaymentMethod },
     });
   };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
+    setData({ ...data, [name]: value });
   };
+
   let subtotal = items.reduce(
     (total, item) => item.Product.productPrice * item.quantity + total,
     0
   );
-
+  if (paymentMethod === PaymentMethod.COD) {
+    subtotal += 100;
+  }
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const itemDetails: ItemDetails[] = items.map((item) => {
-      return {
-        productId: item.Product.id,
-        quantity: item.quantity,
-      };
-    });
+    const itemDetails: ItemDetails[] = items.map((item) => ({
+      productId: item.Product.id,
+      quantity: item.quantity,
+    }));
 
-    const orderData = {
-      ...data,
-      items: itemDetails,
-      totalAmount: subtotal,
-    };
+    const orderData = { ...data, items: itemDetails, totalAmount: subtotal };
     await dispatch(orderItem(orderData));
-    // if(status === Status.SUCCESS){
-    //   alert("Order Placed successfully")
-    // }
   };
+
   useEffect(() => {
-    if (subtotal < 1000) {
-      if (khaltiUrl) {
-        window.location.href = khaltiUrl;
-        return;
-      }
-    } else {
-      alert("you can only 1000 pay using khalti");
+    if (subtotal < 1000 && khaltiUrl) {
+      window.location.href = khaltiUrl;
+      return;
+    } else if (subtotal >= 1000) {
+      // alert("You can only pay up to Rs 1000 using Khalti.");
     }
 
     if (status === Status.SUCCESS) {
-      alert("Order Placed successfully");
+      alert("Order Placed successfully!");
       dispatch(resetStatus());
       navigate("/");
     }
-  }, [status, khaltiUrl]);
+  }, [status, khaltiUrl, subtotal, dispatch, navigate]);
 
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center border-b bg-white mt-[-100px] py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
-        <div className="mt-4 py-7 text-xs sm:mt-0 sm:ml-auto sm:text-base"></div>
-      </div>
-      <div className="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
-        <div className="px-4 pt-8">
-          <p className="text-xl font-medium">Order Summary</p>
-          <p className="text-gray-400">
-            Check your items. And select a suitable shipping method.
-          </p>
-          <div className="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
-            {items.length > 0 &&
-              items.map((item) => {
-                return (
-                  <div
-                    key={item?.Product?.id}
-                    className="flex flex-col rounded-lg bg-white sm:flex-row"
-                  >
-                    <img
-                      className="m-2 h-24 w-28 rounded-md border object-cover object-center"
-                      src={item?.Product?.productImageUrl}
-                      alt=""
-                    />
-                    <div className="flex w-full flex-col px-4 py-4">
-                      <span className="font-semibold">
-                        {item?.Product?.productName}
-                      </span>
-                      <span className="float-right text-gray-400">
-                        Qty :{item?.quantity}{" "}
-                      </span>
-                      <p className="text-lg font-bold">
-                        Rs. {item?.Product?.productPrice}{" "}
+      <div className="bg-white pt-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-2xl underline font-bold text-gray-800 text-center mb-6">
+            Checkout
+          </h1>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Order Summary */}
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Order Summary
+              </h2>
+              <div className="bg-white shadow-md rounded-lg p-4">
+                {items.length > 0 ? (
+                  items.map((item) => (
+                    <div
+                      key={item.Product.id}
+                      className="flex items-center space-x-4 py-4 border-b"
+                    >
+                      <img
+                        src={item.Product.productImageUrl}
+                        alt={item.Product.productName}
+                        className="w-32 h-32 object-contain rounded-md"
+                      />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-800">
+                          Product Name : {item?.Product?.productName}
+                        </p>
+                        <p className="text-sm font-medium text-gray-800">
+                          Category : {item?.Product?.Category?.categoryName}
+                        </p>
+                        <p className="text-sm font-medium text-gray-800">
+                          Product Price : Rs. {item?.Product?.productPrice}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500">No items in the cart.</p>
+                )}
+              </div>
+
+              {/* Payment Methods */}
+              <h2 className="text-xl font-semibold text-gray-900 mt-8">
+                Payment Methods
+              </h2>
+              <div className="space-y-4">
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value={PaymentMethod.COD}
+                    checked={paymentMethod === PaymentMethod.COD}
+                    onChange={handlePaymentMethod}
+                    className="hidden"
+                  />
+                  <div className="w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center">
+                    {paymentMethod === PaymentMethod.COD && (
+                      <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    )}
+                  </div>
+                  <span className="font-medium text-gray-800">
+                    COD (Cash On Delivery)
+                  </span>
+                </label>
+
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value={PaymentMethod.Khalti}
+                    checked={paymentMethod === PaymentMethod.Khalti}
+                    onChange={handlePaymentMethod}
+                    className="hidden"
+                  />
+                  <div className="w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center">
+                    {paymentMethod === PaymentMethod.Khalti && (
+                      <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                    )}
+                  </div>
+                  <span className="font-medium text-gray-800">
+                    Online (Khalti)
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            {/* Shipping & Payment Details */}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Shipping & Payment Details
+              </h2>
+              <div className="bg-white shadow-sm rounded-lg p-4">
+                <label
+                  htmlFor="phoneNumber"
+                  className="block text-sm font-medium text-gray-800"
+                >
+                  Phone Number
+                </label>
+                <input
+                  type="text"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={data.phoneNumber}
+                  onChange={handleChange}
+                  className="mt-2 w-full p-3 border border-gray-300 rounded-md"
+                  placeholder="Your phone number"
+                />
+
+                <label
+                  htmlFor="shippingAddress"
+                  className="block text-sm font-medium text-gray-800 mt-4"
+                >
+                  Shipping Address
+                </label>
+                <input
+                  type="text"
+                  id="shippingAddress"
+                  name="shippingAddress"
+                  value={data.shippingAddress}
+                  onChange={handleChange}
+                  className="mt-2 w-full p-3 border border-gray-300 rounded-md"
+                  placeholder="Street address"
+                />
+              </div>
+
+              {/* Order Summary */}
+              {paymentMethod === PaymentMethod.Khalti ? (
+                <>
+                  <div className="bg-white shadow-sm rounded-lg p-4">
+                    <div className="flex justify-between">
+                      <p className="font-medium text-gray-800">Total Amount</p>
+                      <p className="font-semibold text-gray-800">
+                        Rs {subtotal}
                       </p>
                     </div>
                   </div>
-                );
-              })}
-          </div>
-
-          <p className="mt-8 text-lg font-medium">Payment Methods</p>
-          <form className="mt-5 grid gap-6">
-            <div className="relative">
-              <input
-                className="peer hidden"
-                id="radio_1"
-                type="radio"
-                name="radio"
-                value={PaymentMethod.COD}
-                onChange={handlePaymentMethod}
-              />
-              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-              <label
-                className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                htmlFor="radio_1"
-              >
-                <img
-                  className="w-14 object-contain"
-                  src="/images/naorrAeygcJzX0SyNI4Y0.png"
-                  alt=""
-                />
-                <div className="ml-5">
-                  <span className="mt-2 font-semibold">
-                    COD(Cash On Delivery)
-                  </span>
-                </div>
-              </label>
-            </div>
-            <div className="relative">
-              <input
-                className="peer hidden"
-                id="radio_2"
-                type="radio"
-                value={PaymentMethod.Khalti}
-                onChange={handlePaymentMethod}
-                name="radio"
-              />
-              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-              <label
-                className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                htmlFor="radio_2"
-              >
-                <img
-                  className="w-14 object-contain"
-                  src="/images/oG8xsl3xsOkwkMsrLGKM4.png"
-                  alt=""
-                />
-                <div className="ml-5">
-                  <span className="mt-2 font-semibold">Online(Khalti)</span>
-                </div>
-              </label>
-            </div>
-          </form>
-        </div>
-        <form noValidate onSubmit={handleSubmit}>
-          <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
-            <p className="text-xl font-medium">Payment Details</p>
-            <p className="text-gray-400">
-              Complete your order by providing your payment details.
-            </p>
-            <div className="">
-              <label
-                htmlFor="phoneNumber"
-                className="mt-4 mb-2 block text-sm font-medium"
-              >
-                Phone Number
-              </label>
-              <div className="relative">
-                <input
-                  type="number"
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                  onChange={handleChange}
-                  placeholder="Your Phone Number"
-                />
-              </div>
-
-              <label
-                htmlFor="billing-address"
-                className="mt-4 mb-2 block text-sm font-medium"
-              >
-                Shipping Address
-              </label>
-              <div className="flex flex-col sm:flex-row">
-                <div className="relative flex-shrink-0 sm:w-7/12">
-                  <input
-                    type="text"
-                    id="billing-address"
-                    name="shippingAddress"
-                    className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                    placeholder="Street Address"
-                    onChange={handleChange}
-                  />
-                  <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                    <img
-                      className="h-4 w-4 object-contain"
-                      src="https://flagpack.xyz/_nuxt/4c829b6c0131de7162790d2f897a90fd.svg"
-                      alt=""
-                    />
+                </>
+              ) : (
+                <>
+                  <div className="bg-white shadow-sm rounded-lg p-4">
+                    <div className="flex justify-between">
+                      <p className="font-medium text-gray-800">Subtotal</p>
+                      <p className="font-semibold text-gray-800">
+                        Rs {subtotal - 100}
+                      </p>
+                    </div>
+                    <div className="flex justify-between mt-2">
+                      <p className="font-medium text-gray-800">Shipping</p>
+                      <p className="font-semibold text-gray-800">Rs 100</p>
+                    </div>
+                    <div className="border-t mt-4 pt-4 flex justify-between">
+                      <p className="font-medium text-gray-800">Total Amount</p>
+                      <p className="font-semibold text-gray-800">
+                        Rs {subtotal}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </>
+              )}
 
-              <div className="mt-6 border-t border-b py-2">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-gray-900">Subtotal</p>
-                  <p className="font-semibold text-gray-900">Rs {subtotal}</p>
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-gray-900">Shipping</p>
-                  <p className="font-semibold text-gray-900">Rs 100</p>
-                </div>
+              {/* Payment Button */}
+              <div className="mt-6">
+                {paymentMethod === PaymentMethod.Khalti ? (
+                  <a href={khaltiUrl || "#"}>
+                    <button className="w-full py-3 px-6 bg-purple-600 text-white rounded-md text-center">
+                      {" "}
+                      Pay with Khalti
+                    </button>
+                  </a>
+                ) : (
+                  <button
+                    type="submit"
+                    className="w-full py-3 px-6 bg-blue-600 text-white rounded-md"
+                  >
+                    Place Order
+                  </button>
+                )}
               </div>
-              <div className="mt-6 flex items-center justify-between">
-                <p className="text-sm font-medium text-gray-900">Total</p>
-                <p className="text-2xl font-semibold text-gray-900">
-                  Rs {subtotal + 100}
-                </p>
-              </div>
-            </div>
-
-            {paymentMethod === PaymentMethod.Khalti ? (
-              <button
-                className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
-                style={{ backgroundColor: "purple" }}
-              >
-                Pay With Khalti
-              </button>
-            ) : (
-              <button
-                type="submit"
-                className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
-              >
-                Place Order
-              </button>
-            )}
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </>
   );
