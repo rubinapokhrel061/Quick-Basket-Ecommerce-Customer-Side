@@ -80,7 +80,7 @@ const SingleProduct = () => {
     return color;
   };
 
-  const [randomColor, setRandomColor] = useState(getRandomColor());
+  const [, setRandomColor] = useState(getRandomColor());
 
   useEffect(() => {
     setRandomColor(getRandomColor());
