@@ -2,8 +2,11 @@ import Navbar from "../../../globals/components/navbar/Navbar";
 import { useState } from "react";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdOutlineNavigateNext } from "react-icons/md";
+import image1 from "../../../../public/assets/1.jpg";
+import image2 from "../../../../public/assets/2.jpg";
+import image3 from "../../../../public/assets/3.jpg";
 const Hero = () => {
-  const images = ["/public/1.jpg", "/public/2.jpg", "/public/3.jpg"];
+  const images = [image1, image2, image3];
 
   const texts = [
     "Your One-Stop Shop for Everything!",
