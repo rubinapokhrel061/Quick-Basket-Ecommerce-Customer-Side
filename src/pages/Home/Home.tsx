@@ -18,9 +18,9 @@ const Home = () => {
     <div className="">
       <Hero />
       <div className=" pt-10 min-h-[100vh]  items-center">
-        <h1 className="text-green-700 text-center  underline pt-6 md:pt-10 text-2xl font-bold ">
-          Best Product
-        </h1>
+        <h2 className="text-3xl underline ml-4 text-center py-10 font-extrabold text-[#FFA500]">
+          Best Products
+        </h2>
         <div className="flex flex-wrap items-center justify-center mx-auto gap-4 md:gap-6 mt-6">
           {product.length > 0 ? (
             product.map((pd) => {

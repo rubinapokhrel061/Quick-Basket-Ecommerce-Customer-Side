@@ -123,7 +123,7 @@ export function updateCartItem(productId: string, quantity: number) {
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
         dispatch(setUpdateItem({ productId, quantity }));
-        toast.success(response.data.message);
+        // toast.success(response.data.message);
       } else {
         dispatch(setStatus(Status.ERROR));
       }

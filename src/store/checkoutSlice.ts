@@ -110,7 +110,7 @@ export function orderItem(data: OrderData) {
       }
     } catch (error: any) {
       dispatch(setStatus(Status.ERROR));
-      toast.error(error.response.data.message);
+      toast.error(error.response.data);
     }
   };
 }

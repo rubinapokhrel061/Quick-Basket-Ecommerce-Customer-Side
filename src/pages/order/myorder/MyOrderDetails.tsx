@@ -5,16 +5,17 @@ import {
   cancelMyOrder,
   fetchMyOrderDetails,
 } from "../../../store/checkoutSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   OrderStatus,
   PaymentMethod,
 } from "../../../globals/types/CheckoutTypes";
+import Footer from "../../../globals/components/footer/Footer";
 
 const MyOrderDetails = () => {
   const { id } = useParams();
   const { orderDetails } = useAppSelector((state) => state.orders);
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const MyOrderDetails = () => {
     if (id) {
       await dispatch(cancelMyOrder(id));
       await dispatch(fetchMyOrderDetails(id));
+      navigate("/myorder");
     }
   };
 
@@ -36,7 +38,7 @@ const MyOrderDetails = () => {
       <div className="pt-28 pb-8  px-6 md:px-10 2xl:px-20 2xl:container mx-auto">
         {/* Order Info */}
         <div className="text-center space-y-4">
-          <h1 className="text-3xl font-semibold text-gray-800 dark:text-white">
+          <h1 className="mb-6 mt-8 text-2xl underline font-extrabold text-[#FFA500]">
             Order Details
           </h1>
           <p className="text-sm text-gray-500">
@@ -168,6 +170,7 @@ const MyOrderDetails = () => {
           </div>
         )}
       </div>
+      <Footer />
     </>
   );
 };

@@ -10,6 +10,7 @@ import { addToCart } from "../../store/cartSlice";
 import { Review } from "../../globals/types/productTypes";
 import { FaUserCircle } from "react-icons/fa";
 import { Status } from "../../globals/types/types";
+import Footer from "../../globals/components/footer/Footer";
 
 const SingleProduct = () => {
   const dispatch = useAppDispatch();
@@ -131,7 +132,7 @@ const SingleProduct = () => {
 
           {/* Product Details */}
           <div className="md:flex-1 pl-10 px-4 p-4">
-            <h1 className="underline pt-4 text-xl text-green-600 font-semibold pb-2">
+            <h1 className="underline pt-4 text-xl text-[#FFA500] font-extrabold pb-2">
               Product Details
             </h1>
             <h2 className="text-lg font-semibold">
@@ -253,7 +254,7 @@ const SingleProduct = () => {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                className="px-4 py-2  bg-[#28A745] hover:bg-[#21903b] text-white rounded-md"
               >
                 Submit Review
               </button>
@@ -261,6 +262,7 @@ const SingleProduct = () => {
           </form>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

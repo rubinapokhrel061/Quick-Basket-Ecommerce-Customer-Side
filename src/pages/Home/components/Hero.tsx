@@ -6,9 +6,9 @@ const Hero = () => {
   const images = ["/public/1.jpg", "/public/2.jpg", "/public/3.jpg"];
 
   const texts = [
-    "The Best Collection of Watches Here...",
-    "Find Your Favourite Watch here...",
-    "Fashionable Watches for Everyone...",
+    "Your One-Stop Shop for Everything!",
+    " Electronic and More All in One Shop!",
+    "Fast Shopping, Fresh Finds!",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -28,21 +28,21 @@ const Hero = () => {
   return (
     <div>
       <Navbar />
-      <div className="relative pt-20 w-full h-[90vh]">
-        <div className="relative h-full overflow-hidden ">
+      <div className="relative pt-20 w-full h-[95vh]">
+        <div className="relative h-full ">
           {images.map((src, index) => (
             <div
               key={index}
-              className={`absolute block w-full h-full transition-opacity duration-700 ease-in-out ${
+              className={`absolute block  w-full h-full transition-opacity duration-700 ease-in-out ${
                 index === currentIndex ? "opacity-100" : "opacity-0"
               }`}
             >
               <img
                 src={src}
                 alt={`Slide ${index + 1}`}
-                className="w-full h-full object-contain" // Ensure images cover the area
+                className="w-full h-full object-contain"
               />
-              <div className="absolute inset-0 text-white bg-black bg-opacity-50">
+              <div className="absolute inset-0 text-black  font-semibold bg-black bg-opacity-10">
                 <h4 className="text-2xl absolute bottom-20 left-10 md:text-3xl">
                   {texts[index]}
                 </h4>

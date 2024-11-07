@@ -9,6 +9,7 @@ import {
 import { orderItem, resetStatus } from "../../store/checkoutSlice";
 import { Status } from "../../globals/types/types";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../globals/components/footer/Footer";
 
 const Checkout = () => {
   const { items } = useAppSelector((state) => state.carts);
@@ -77,7 +78,7 @@ const Checkout = () => {
       <Navbar />
       <div className="bg-white pb-12 pt-36 md:pt-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-2xl underline font-bold text-gray-800 text-center mb-6">
+          <h1 className="text-2xl underline  mt-4 font-extrabold text-[#FFA500] text-center mb-6">
             Checkout
           </h1>
 
@@ -248,7 +249,7 @@ const Checkout = () => {
                 ) : (
                   <button
                     type="submit"
-                    className="w-full py-3 px-6 bg-blue-600 text-white rounded-md"
+                    className="w-full py-3 px-6  bg-[#28A745] hover:bg-[#21903b] text-white rounded-md"
                   >
                     Place Order
                   </button>
@@ -258,6 +259,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

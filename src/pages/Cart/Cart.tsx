@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../../globals/components/navbar/Navbar";
 import { deleteCartItem, updateCartItem } from "../../store/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import Footer from "../../globals/components/footer/Footer";
 
 const Cart = () => {
   const { items } = useAppSelector((state) => state.carts);
@@ -29,7 +30,7 @@ const Cart = () => {
     <div>
       <Navbar />
       <div className="bg-gray-100 min-h-screen pb-8 pt-36 md:pt-28">
-        <h1 className="text-center text-2xl font-bold text-gray-800 mb-8">
+        <h1 className="text-center text-2xl font-extrabold text-[#FFA500] underline mb-8">
           Cart Items
         </h1>
         {items?.length < 1 ? (
@@ -123,7 +124,7 @@ const Cart = () => {
               </div>
               <div className="mt-4">
                 <Link to="/checkout">
-                  <button className="w-full py-2 bg-blue-500 text-white rounded-md text-lg hover:bg-blue-600 transition-all">
+                  <button className="w-full py-2 bg-[#28A745] hover:bg-[#21903b] text-white rounded-md text-lg transition-all">
                     Checkout
                   </button>
                 </Link>
@@ -132,6 +133,8 @@ const Cart = () => {
           </div>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 };

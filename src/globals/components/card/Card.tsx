@@ -43,7 +43,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
           </div>
           <button
             onClick={() => handleAddToCart(data.id)}
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 md:px-5 md:py-2.5 text-center transition-all duration-300 ease-in-out transform hover:scale-105"
+            className="text-white bg-[#28A745] hover:bg-[#21903b] font-medium rounded-lg text-sm px-2 py-1 md:px-5 md:py-2.5 text-center transition-all duration-300 ease-in-out transform hover:scale-105"
           >
             Add to cart
           </button>

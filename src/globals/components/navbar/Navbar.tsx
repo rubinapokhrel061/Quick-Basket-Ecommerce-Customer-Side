@@ -30,7 +30,7 @@ const Navbar = () => {
     <>
       <div
         id="page-header"
-        className="fixed w-full z-40 items-center py-7 text-white bg-[#333333]"
+        className="fixed w-full z-40 items-center py-7 text-white bg-[#FFA500]"
       >
         <div className="container mx-auto flex flex-col gap-4 px-5 text-center sm:flex-row sm:items-center sm:justify-between lg:px-8 xl:max-w-7xl">
           <div>
@@ -38,8 +38,10 @@ const Navbar = () => {
               to="/"
               className="group inline-flex items-center   text-lg md:text-2xl font-bold tracking-wide"
             >
-              <span className="text-pink-600 hover:text-pink-700">Digital</span>
-              <span>-Shelf</span>
+              <span className=" text-[#28A745] hover:text-[#21903b]">
+                Quick
+              </span>
+              <span>Basket</span>
             </Link>
           </div>
           <nav className="space-x-3 md:space-x-6">

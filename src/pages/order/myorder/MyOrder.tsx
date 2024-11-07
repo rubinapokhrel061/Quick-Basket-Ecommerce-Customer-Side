@@ -9,6 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import { OrderStatus } from "../../../globals/types/CheckoutTypes";
 import { socket } from "../../../App";
+import Footer from "../../../globals/components/footer/Footer";
 
 const MyOrder = () => {
   const dispatch = useAppDispatch();
@@ -63,28 +64,33 @@ const MyOrder = () => {
     };
   }, [dispatch, socket]);
 
+  const resetFilters = () => {
+    setSelectedItem(OrderStatus.All);
+    setSearchTerm("");
+    setDate("");
+  };
+
   return (
     <>
       <Navbar />
-      <div className="pt-32 bg-gray-100 pb-4 min-h-screen">
+      <div className="pt-32 pb-10 bg-gray-100 min-h-screen">
         <div className="container mx-auto px-4 sm:px-8">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-2xl underline text-center mb-6 mt-4 font-extrabold text-[#FFA500] ">
             My Orders
           </h2>
           <div className="my-4 flex flex-col sm:flex sm:flex-row flex-wrap gap-4">
             {/* Order Status Filter */}
             <div className="flex-1">
               <select
-                value={selectedItem}
                 onChange={(e) => setSelectedItem(e.target.value as OrderStatus)}
                 className="w-full bg-white border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value={OrderStatus.All}>All Orders</option>
-                <option value={OrderStatus.Pending}>Pending</option>
-                <option value={OrderStatus.Delivered}>Delivered</option>
-                <option value={OrderStatus.Ontheway}>On the Way</option>
-                <option value={OrderStatus.Cancel}>Cancelled</option>
-                <option value={OrderStatus.Preparation}>In Preparation</option>
+                <option value={OrderStatus.All}>all</option>
+                <option value={OrderStatus.Pending}>pending</option>
+                <option value={OrderStatus.Delivered}>delivered</option>
+                <option value={OrderStatus.Ontheway}>ontheWay</option>
+                <option value={OrderStatus.Cancel}>cancelled</option>
+                <option value={OrderStatus.Preparation}> preparation</option>
               </select>
             </div>
 
@@ -108,6 +114,12 @@ const MyOrder = () => {
                 className="w-full bg-white border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
+            <button
+              onClick={resetFilters}
+              className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md focus:outline-none "
+            >
+              Reset
+            </button>
           </div>
 
           <div className="overflow-y-auto">
@@ -149,6 +161,8 @@ const MyOrder = () => {
                           className={`px-3 py-1 rounded-full text-sm ${
                             order.orderStatus === OrderStatus.Delivered
                               ? "bg-green-200 text-green-700"
+                              : order.orderStatus === OrderStatus.Cancel
+                              ? "bg-red-200 text-red-700"
                               : "bg-yellow-200 text-yellow-700"
                           }`}
                         >
@@ -175,6 +189,7 @@ const MyOrder = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
