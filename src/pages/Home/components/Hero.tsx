@@ -2,11 +2,9 @@ import Navbar from "../../../globals/components/navbar/Navbar";
 import { useState } from "react";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdOutlineNavigateNext } from "react-icons/md";
-import image1 from "../../../../public/assets/1.jpg";
-import image2 from "../../../../public/assets/2.jpg";
-import image3 from "../../../../public/assets/3.jpg";
+
 const Hero = () => {
-  const images = [image1, image2, image3];
+  const images = ["/assets/1.jpg", "/assets/2.jpg", "/assets/3.jpg"];
 
   const texts = [
     "Your One-Stop Shop for Everything!",
@@ -33,7 +31,7 @@ const Hero = () => {
       <Navbar />
       <div className="relative pt-20 w-full h-[95vh]">
         <div className="relative h-full ">
-          {images.map((src, index) => (
+          {images?.map((src, index) => (
             <div
               key={index}
               className={`absolute block  w-full h-full transition-opacity duration-700 ease-in-out ${
