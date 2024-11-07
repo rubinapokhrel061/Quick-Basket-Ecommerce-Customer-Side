@@ -3,6 +3,7 @@ import { CartItem, CartState } from "../globals/types/cartTypes";
 import { Status } from "../globals/types/types";
 import { AppDispatch } from "./store";
 import { APIAuthenticated } from "../http";
+import toast from "react-hot-toast";
 
 const initialState: CartState = {
   items: [],
@@ -59,11 +60,13 @@ export function addToCart(productId: string) {
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
         dispatch(setItems(response.data.data));
+        toast.success(response.data.message);
       } else {
         dispatch(setStatus(Status.ERROR));
       }
-    } catch (error) {
+    } catch (error: any) {
       dispatch(setStatus(Status.ERROR));
+      toast.error(error.response.data.message);
     }
   };
 }
@@ -79,7 +82,8 @@ export function fetchCartItems() {
       } else {
         dispatch(setStatus(Status.ERROR));
       }
-    } catch (error) {
+    } catch (error: any) {
+      // toast.error(error.response.data.message);
       dispatch(setStatus(Status.ERROR));
     }
   };
@@ -95,11 +99,13 @@ export function deleteCartItem(productId: string) {
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
         dispatch(setDeleteItem({ productId }));
+        toast.success(response.data.message);
       } else {
         dispatch(setStatus(Status.ERROR));
       }
-    } catch (error) {
+    } catch (error: any) {
       dispatch(setStatus(Status.ERROR));
+      toast.error(error.response.data.message);
     }
   };
 }
@@ -117,10 +123,12 @@ export function updateCartItem(productId: string, quantity: number) {
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
         dispatch(setUpdateItem({ productId, quantity }));
+        toast.success(response.data.message);
       } else {
         dispatch(setStatus(Status.ERROR));
       }
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.response.data.message);
       dispatch(setStatus(Status.ERROR));
     }
   };

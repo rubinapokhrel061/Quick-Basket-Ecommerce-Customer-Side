@@ -11,6 +11,7 @@ import {
 } from "../globals/types/CheckoutTypes";
 import { AppDispatch } from "./store";
 import { APIAuthenticated } from "../http";
+import toast from "react-hot-toast";
 
 const initialState: OrderResponseData = {
   items: [],
@@ -98,6 +99,7 @@ export function orderItem(data: OrderData) {
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
         dispatch(setItems(response.data.data));
+        toast.success(response.data.message);
         if (response.data.url) {
           dispatch(setKhaltiUrl(response.data.url));
         } else {
@@ -106,8 +108,9 @@ export function orderItem(data: OrderData) {
       } else {
         dispatch(setStatus(Status.ERROR));
       }
-    } catch (error) {
+    } catch (error: any) {
       dispatch(setStatus(Status.ERROR));
+      toast.error(error.response.data.message);
     }
   };
 }
@@ -123,7 +126,8 @@ export function fetchMyOrders() {
       } else {
         dispatch(setStatus(Status.ERROR));
       }
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.response.data.message);
       dispatch(setStatus(Status.ERROR));
     }
   };
@@ -140,8 +144,9 @@ export function fetchMyOrderDetails(id: string) {
       } else {
         dispatch(setStatus(Status.ERROR));
       }
-    } catch (error) {
+    } catch (error: any) {
       dispatch(setStatus(Status.ERROR));
+      toast.error(error.response.data.message);
     }
   };
 }
@@ -153,10 +158,12 @@ export function cancelMyOrder(id: string) {
       const response = await APIAuthenticated.patch("/order/customer/" + id);
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
+        toast.success(response.data.message);
       } else {
         dispatch(setStatus(Status.ERROR));
       }
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.response.data.message);
       dispatch(setStatus(Status.ERROR));
     }
   };

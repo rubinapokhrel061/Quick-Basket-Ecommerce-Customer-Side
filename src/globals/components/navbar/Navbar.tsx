@@ -22,6 +22,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.clear();
     setIsLoggedIn(false);
   };
 
@@ -37,17 +38,15 @@ const Navbar = () => {
               to="/"
               className="group inline-flex items-center   text-lg md:text-2xl font-bold tracking-wide"
             >
-              <span className="text-pink-600 hover:text-pink-700">
-                Classic{" "}
-              </span>
-              <span>-Watch Store</span>
+              <span className="text-pink-600 hover:text-pink-700">Digital</span>
+              <span>-Shelf</span>
             </Link>
           </div>
           <nav className="space-x-3 md:space-x-6">
             {!isLoggedIn ? (
               <>
                 <Link
-                  to="register"
+                  to="/register"
                   className=" text-base font-semibold  hover:text-blue-600  md:text-lg "
                 >
                   <span>Register</span>

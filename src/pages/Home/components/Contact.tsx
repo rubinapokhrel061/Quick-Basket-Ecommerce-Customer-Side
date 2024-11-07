@@ -1,6 +1,6 @@
 const Contact = () => {
   return (
-    <div className="flex flex-col  md:flex md:flex-row md:justify-between  sm:px-6 min-h-[60vh] lg:px-8  w-[90%] mx-auto">
+    <div className="flex flex-col py-20  md:flex md:flex-row md:justify-between  sm:px-6 min-h-[60vh] lg:px-8  w-[90%] mx-auto">
       <div className="w-full md:max-w-[50%]">
         <h2 className="text-3xl font-extrabold text-gray-900">Contact Us</h2>
         <p className="mt-4 text-gray-700 text-lg">GET IN TOUCH WITH US</p>

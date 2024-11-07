@@ -28,7 +28,7 @@ const Hero = () => {
   return (
     <div>
       <Navbar />
-      <div className="relative w-full h-[90vh]">
+      <div className="relative pt-20 w-full h-[90vh]">
         <div className="relative h-full overflow-hidden ">
           {images.map((src, index) => (
             <div
@@ -40,7 +40,7 @@ const Hero = () => {
               <img
                 src={src}
                 alt={`Slide ${index + 1}`}
-                className="w-full h-full object-cover" // Ensure images cover the area
+                className="w-full h-full object-contain" // Ensure images cover the area
               />
               <div className="absolute inset-0 text-white bg-black bg-opacity-50">
                 <h4 className="text-2xl absolute bottom-20 left-10 md:text-3xl">

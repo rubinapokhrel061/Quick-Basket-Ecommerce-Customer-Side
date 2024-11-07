@@ -12,6 +12,7 @@ import MyOrder from "./pages/order/myorder/MyOrder";
 import MyOrderDetails from "./pages/order/myorder/MyOrderDetails";
 
 import { io } from "socket.io-client";
+import { Toaster } from "react-hot-toast";
 export const socket = io("http://localhost:8080", {
   auth: {
     token: localStorage.getItem("token"),
@@ -32,6 +33,7 @@ function App() {
           <Route path="/product/:id" element={<SingleProduct />}></Route>
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </Provider>
   );
 }

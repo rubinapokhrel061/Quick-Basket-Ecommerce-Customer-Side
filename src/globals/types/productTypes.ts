@@ -10,7 +10,14 @@ interface Category {
   id: string;
   categoryName: string;
 }
-
+export interface Review {
+  id: string;
+  productId: string;
+  reviewerName: string;
+  rating: number;
+  reviewContent: string;
+  userId: string;
+}
 export interface Product {
   id: string;
   productName: string;
@@ -24,6 +31,9 @@ export interface Product {
   categoryId: string;
   User: User;
   Category: Category;
+  rating: number;
+  numReviews: number;
+  Reviews: Review[];
 }
 
 export interface ProductState {

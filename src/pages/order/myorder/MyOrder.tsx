@@ -30,10 +30,8 @@ const MyOrder = () => {
     )
     .filter(
       (order) =>
-        order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.Payment.paymentMethod
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
+        order.id.toLowerCase().includes(searchTerm) ||
+        order.Payment.paymentMethod.toLowerCase().includes(searchTerm) ||
         order.totalAmount.toString().includes(searchTerm)
     )
     .filter(
@@ -63,7 +61,7 @@ const MyOrder = () => {
       socket.off("statusUpdated", handleStatusUpdated);
       socket.off("paymentStatusUpdated", handlePaymentStatusUpdated);
     };
-  }, [dispatch]);
+  }, [dispatch, socket]);
 
   return (
     <>
@@ -73,7 +71,7 @@ const MyOrder = () => {
           <h2 className="text-3xl font-semibold text-gray-800 mb-4">
             My Orders
           </h2>
-          <div className="my-4 flex flex-wrap gap-4">
+          <div className="my-4 flex flex-col sm:flex sm:flex-row flex-wrap gap-4">
             {/* Order Status Filter */}
             <div className="flex-1">
               <select
@@ -112,8 +110,8 @@ const MyOrder = () => {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white shadow-md rounded-lg">
+          <div className="overflow-y-auto">
+            <table className="min-w-full   bg-white shadow-md rounded-lg">
               <thead>
                 <tr className="bg-gray-200 text-gray-700">
                   <th className="px-5 py-3 text-left text-sm font-medium">

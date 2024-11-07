@@ -67,7 +67,6 @@ const Checkout = () => {
     }
 
     if (status === Status.SUCCESS) {
-      alert("Order Placed successfully!");
       dispatch(resetStatus());
       navigate("/");
     }
@@ -76,7 +75,7 @@ const Checkout = () => {
   return (
     <>
       <Navbar />
-      <div className="bg-white pt-32">
+      <div className="bg-white pb-12 pt-36 md:pt-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl underline font-bold text-gray-800 text-center mb-6">
             Checkout

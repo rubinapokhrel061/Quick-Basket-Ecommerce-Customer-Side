@@ -28,7 +28,7 @@ const Cart = () => {
   return (
     <div>
       <Navbar />
-      <div className="bg-gray-100 min-h-screen  py-8 md:pt-28">
+      <div className="bg-gray-100 min-h-screen pb-8 pt-36 md:pt-28">
         <h1 className="text-center text-2xl font-bold text-gray-800 mb-8">
           Cart Items
         </h1>
@@ -39,13 +39,13 @@ const Cart = () => {
         ) : (
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 px-4">
             {/* Cart Items List */}
-            <div className="w-full md:w-2/3 bg-white shadow-lg rounded-lg p-6 ">
+            <div className="w-full md:w-2/3 bg-white shadow-lg rounded-lg p-6 space-y-4">
               {items.map((item) => (
                 <div
                   key={item?.Product?.id}
-                  className="flex justify-between px-4 items-center bg-gray-50 rounded-md shadow-sm hover:shadow-lg transition-all "
+                  className="flex flex-col lg:flex-row justify-center bg-gray-50 rounded-md shadow-sm hover:shadow-lg transition-all p-4"
                 >
-                  <div className="flex justify-center items-center gap-3">
+                  <div className="flex justify-center items-center gap-4 md:gap-6">
                     <img
                       src={item?.Product?.productImageUrl}
                       alt="product-image"
@@ -53,18 +53,18 @@ const Cart = () => {
                     />
                     <div>
                       <p className="text-sm font-medium text-gray-800">
-                        Product Name : {item?.Product?.productName}
+                        Product Name: {item?.Product?.productName}
                       </p>
                       <p className="text-sm font-medium text-gray-800">
-                        Category : {item?.Product?.Category?.categoryName}
+                        Category: {item?.Product?.Category?.categoryName}
                       </p>
                       <p className="text-sm font-medium text-gray-800">
-                        Product Price : Rs. {item?.Product?.productPrice}
+                        Price: Rs. {item?.Product?.productPrice}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between ml-4">
-                    <div className="flex items-center">
+                  <div className="flex   items-center justify-center  mt-4 md:mt-0">
+                    <div className="flex items-center gap-2">
                       <span
                         onClick={() =>
                           handleUpdate(
@@ -92,10 +92,9 @@ const Cart = () => {
                         +
                       </span>
                     </div>
-
                     <button
                       onClick={() => handleDelete(item?.Product?.id)}
-                      className="ml-4  px-2 py-1 rounded-md text-slate-50 bg-red-500 hover:bg-red-700"
+                      className="ml-4   px-2 py-1 rounded-md text-slate-50 bg-red-500 hover:bg-red-700"
                     >
                       Delete
                     </button>
