@@ -96,21 +96,24 @@ export function orderItem(data: OrderData) {
     dispatch(setStatus(Status.LOADING));
     try {
       const response = await APIAuthenticated.post("/order", data);
+      console.log(response);
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
         dispatch(setItems(response.data.data));
-        toast.success(response.data.message);
+
         if (response.data.url) {
           dispatch(setKhaltiUrl(response.data.url));
         } else {
           dispatch(setKhaltiUrl(null));
         }
+        toast.success(response.data.message);
       } else {
         dispatch(setStatus(Status.ERROR));
+        toast.error("something went wrong!");
       }
     } catch (error: any) {
       dispatch(setStatus(Status.ERROR));
-      toast.error(error.response.data);
+      toast.error(error.response.data.message || "something went wrong!");
     }
   };
 }

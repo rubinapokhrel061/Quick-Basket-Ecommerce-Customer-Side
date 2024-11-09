@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import Navbar from "../../globals/components/navbar/Navbar";
-import { deleteCartItem, updateCartItem } from "../../store/cartSlice";
+import {
+  deleteCartItem,
+  fetchCartItems,
+  updateCartItem,
+} from "../../store/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import Footer from "../../globals/components/footer/Footer";
+import { useEffect } from "react";
 
 const Cart = () => {
   const { items } = useAppSelector((state) => state.carts);
@@ -26,6 +31,10 @@ const Cart = () => {
     0
   );
 
+  useEffect(() => {
+    dispatch(fetchCartItems());
+  }, [dispatch]);
+
   return (
     <div>
       <Navbar />
@@ -46,7 +55,7 @@ const Cart = () => {
                   key={item?.Product?.id}
                   className="flex flex-col lg:flex-row justify-center bg-gray-50 rounded-md shadow-sm hover:shadow-lg transition-all p-4"
                 >
-                  <div className="flex justify-center items-center gap-4 md:gap-6">
+                  <div className="flex justify-center pr-3 items-center gap-4 md:gap-6">
                     <img
                       src={item?.Product?.productImageUrl}
                       alt="product-image"
@@ -105,7 +114,7 @@ const Cart = () => {
             </div>
 
             {/* Cart Summary */}
-            <div className="w-full md:w-1/3 bg-white shadow-lg rounded-lg p-6 space-y-6">
+            <div className="w-full md:w-1/3 bg-white h-[45vh] shadow-lg rounded-lg p-6 space-y-6">
               <div className="text-lg font-semibold text-gray-800">
                 Cart Summary
               </div>
@@ -120,7 +129,7 @@ const Cart = () => {
               <hr className="my-4" />
               <div className="flex justify-between text-lg font-bold text-gray-800">
                 <p>Total</p>
-                <p>Rs. {totalPriceInCarts}</p>
+                first <p>Rs. {totalPriceInCarts}</p>
               </div>
               <div className="mt-4">
                 <Link to="/checkout">

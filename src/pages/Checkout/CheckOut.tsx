@@ -69,7 +69,7 @@ const Checkout = () => {
 
     if (status === Status.SUCCESS) {
       dispatch(resetStatus());
-      navigate("/");
+      navigate("/myorder");
     }
   }, [status, khaltiUrl, subtotal, dispatch, navigate]);
 
