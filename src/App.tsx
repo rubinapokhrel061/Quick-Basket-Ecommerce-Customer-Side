@@ -13,6 +13,8 @@ import MyOrderDetails from "./pages/order/myorder/MyOrderDetails";
 
 import { io } from "socket.io-client";
 import { Toaster } from "react-hot-toast";
+import NotFound from "./pages/NotFound";
+import Protected from "./protected/Protected";
 export const socket = io("http://localhost:8080", {
   auth: {
     token: localStorage.getItem("token"),
@@ -26,11 +28,40 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/cart" element={<Cart />}></Route>
-          <Route path="/myorder" element={<MyOrder />}></Route>
-          <Route path="/myorder/:id" element={<MyOrderDetails />} />
-          <Route path="/checkout" element={<Checkout />}></Route>
+          <Route
+            path="/cart"
+            element={
+              <Protected>
+                <Cart />
+              </Protected>
+            }
+          ></Route>
+          <Route
+            path="/myorder"
+            element={
+              <Protected>
+                <MyOrder />
+              </Protected>
+            }
+          ></Route>
+          <Route
+            path="/myorder/:id"
+            element={
+              <Protected>
+                <MyOrderDetails />
+              </Protected>
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <Protected>
+                <Checkout />
+              </Protected>
+            }
+          ></Route>
           <Route path="/product/:id" element={<SingleProduct />}></Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
