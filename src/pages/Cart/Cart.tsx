@@ -58,7 +58,7 @@ const Cart = () => {
                   <div className="flex justify-center pr-3 items-center gap-4 md:gap-6">
                     <img
                       src={item?.Product?.productImageUrl}
-                      alt="product-image"
+                      alt={item?.Product?.productName}
                       className="w-32 h-32 object-contain rounded-md"
                     />
                     <div>

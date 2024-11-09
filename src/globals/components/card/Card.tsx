@@ -24,7 +24,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
         <img
           className="rounded-t-lg w-[70vw] h-[30vh] object-contain"
           src={data?.productImageUrl}
-          alt="product image"
+          alt={data?.productName}
         />
         <h2 className="capitalize text-2xl font-bold pt-2 tracking-tight text-gray-800 hover:text-blue-600 transition-colors duration-200">
           {data?.productName}

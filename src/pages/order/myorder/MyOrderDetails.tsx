@@ -63,7 +63,7 @@ const MyOrderDetails = () => {
                     <img
                       className="w-full h-40 object-cover rounded-lg"
                       src={order?.Product?.productImageUrl}
-                      alt="Product"
+                      alt={order?.Product?.productName}
                     />
                   </div>
                   <div className="flex-1">

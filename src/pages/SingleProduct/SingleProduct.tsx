@@ -105,7 +105,7 @@ const SingleProduct = () => {
               <img
                 className="w-full h-full object-contain rounded-lg"
                 src={singleProduct?.productImageUrl}
-                alt="Product Image"
+                alt={singleProduct?.productName}
               />
             </div>
             <div className="flex -mx-2 mt-8 mb-4">
