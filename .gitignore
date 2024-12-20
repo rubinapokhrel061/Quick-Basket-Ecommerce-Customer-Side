@@ -6,12 +6,12 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
+daywiselearning
 node_modules
 dist
 dist-ssr
 *.local
-dayWiseLearning
+daywiselearning
 
 # Editor directories and files
 .vscode/*
